@@ -1,0 +1,55 @@
+<div class="panel panel-primary">
+  <div class="panel-heading">
+      <h3 class="panel-title"><strong>Create User Form</strong></h3>
+  </div>
+  <div class="panel-body">
+    <div class="container-fluid">
+      <form class="form-horizontal"  #userForm="ngForm" (ngSubmit)="saveUser()">
+        <div class="form-group" [class.has-error]="fName.invalid && fName.touched" [class.has-success]="fName.valid">
+          <label class="control-label" for="fName">First Name:</label>
+          <input required type="text" name="fName" [(ngModel)]="user.fName" #fName="ngModel"  class="form-control" id="fName" placeholder="(required)">
+          <span class="help-block" *ngIf="fName.invalid && fName.touched">
+            First Name is required.
+          </span>
+        </div>
+        <div class="form-group">
+          <label class="control-label" for="lName">Last Name:</label>
+          <input type="text" name="lName" [(ngModel)]="user.lName" class="form-control" id="lName" placeholder="(optional)">
+        </div>
+        <div class="form-group"  [class.has-error]="email.errors?.pattern" [class.has-success]="!email.errors?.pattern && email.dirty">
+          <label class="control-label" for="email">Email address:</label>
+          <input type="email" pattern="^[a-zA-Z0-9._-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$" name="email" [(ngModel)]="user.email" #email="ngModel" class="form-control" id="email" placeholder="'abc@bcd.cde' (optional)"/>
+          <span class="help-block" *ngIf="email.errors?.pattern && email.touched">
+              Please enter valid email.
+          </span>
+        </div>
+        <div class="form-group" [class.has-error]="phNum.invalid && phNum.touched" [class.has-success]="phNum.valid && !phNum.errors?.pattern">
+          <label class="control-label" for="phNum">Phone Number:</label>
+          <input required type="text" pattern="\d{10}$" name="phNum" [(ngModel)]="user.phNum" #phNum="ngModel" class="form-control" id="phNum" placeholder="(required)">
+          <span class="help-block" *ngIf="(phNum.pristine && phNum.touched)">
+              Phone Number is required.
+          </span>
+          <span class="help-block" *ngIf="phNum.errors?.pattern">
+              Enter a valid Phone Number.
+          </span>
+        </div>
+        <div class="form-group" [class.has-error]="isActive.invalid && isActive.touched" [class.has-success]            ="isActive.valid">
+          <label>Status: <span class="text-muted">(required)</span></label>
+          <div class="form-control">
+            <div class="radio-inline">
+                <label><input required type="radio" name="isActive" [(ngModel)]="user.isActive" #isActive="ngModel" [value]="true">Active</label>
+            </div>
+            <div class="radio-inline">
+                <label><input type="radio" name="isActive" [(ngModel)]="user.isActive" #isActive="ngModel" [value]="false">Away</label>
+            </div>
+          </div>
+          <span class="help-block" *ngIf="isActive.invalid && isActive.touched">
+              Please choose one.
+          </span>
+        </div>    
+        <button type="submit" class="btn btn-success col-xs-12" [disabled]="userForm.invalid" >Submit</button>
+      </form>
+  </div>
+  </div>
+</div>
+
